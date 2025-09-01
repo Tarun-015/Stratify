@@ -1,1 +1,3 @@
-# Stratify-
+# Stratify #
+
+[Simulate. Predict. Monetize]
