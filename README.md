@@ -4,7 +4,7 @@
 
 
 
-├── .env
+├── .env(environment)
 
 ├── Data-collection
 
