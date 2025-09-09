@@ -9,15 +9,15 @@
 ├── Data-collection
 
     ├── tournments data
-    
+    |
     │   ├── cleaned_tournaments.csv
-    
+    |
     │   ├── cleaning.py
-    
+    |
     │   ├── remove_duplicates.py
-    
+    |
     │   ├── tournaments.csv.xlsx
-    
+    |
     │   ├── tournaments_grouped.csv
     
     │   ├── tournments.py
