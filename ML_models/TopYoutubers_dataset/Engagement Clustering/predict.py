@@ -76,6 +76,7 @@ def get_video_stats(channel_id, max_results=10):
 
     return avg_likes, avg_comments
 
+
 def predict_engagement(youtuber_name):
     channel_id = get_channel_id(youtuber_name)
     if not channel_id:
@@ -90,17 +91,20 @@ def predict_engagement(youtuber_name):
 
     # Compute features
     avg_views = data["total_views"] / max(1, data["video_count"])
-    input_df = pd.DataFrame([[
-    avg_views,
-    avg_likes,
-    avg_comments
-    ]], columns=["avg_views_per_video", "likes_per_video_avg", "comments_per_video_avg"])
+    input_df = pd.DataFrame([[avg_views, avg_likes, avg_comments]],
+                            columns=["avg_views_per_video", "likes_per_video_avg", "comments_per_video_avg"])
 
-    
     input_scaled = scaler.transform(input_df)
     cluster = kmeans.predict(input_scaled)[0]
     engagement_category = mapping[cluster]
-    
+
+    # Fetch channel start year
+    request = youtube.channels().list(
+        part="snippet",
+        id=channel_id
+    )
+    response = request.execute()
+    start_year = response["items"][0]["snippet"]["publishedAt"].split("-")[0]
 
     return {
         "Channel\n": data["channel_title"],
@@ -110,10 +114,11 @@ def predict_engagement(youtuber_name):
         "Avg Views/Video\n": round(avg_views, 2),
         "Avg Likes/Video\n": round(avg_likes, 2),
         "Avg Comments/Video\n": round(avg_comments, 2),
-        "Engagement": engagement_category
+        "Engagement": engagement_category,
+        "Channel Start Year\n": start_year
     }
-
-
+    
+    
 # User Input
 if __name__ == "__main__":
     name = input("Enter YouTuber name: ")

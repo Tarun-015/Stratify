@@ -72,7 +72,7 @@ def predict_genre_saturation(game_name: str):
     pred = pipeline.predict(X_new)[0]
     label = "Over-Saturated" if pred == 1 else "Safe"
 
-    print(f"🎮 Prediction for '{game_name}' (Genre: {selected_genre}): {label}")
+    print(f"Prediction for '{game_name}' (Genre: {selected_genre}): {label}")
     return label
 
 
