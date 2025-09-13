@@ -18,7 +18,6 @@ class GenreDominanceCalculator(BaseEstimator, TransformerMixin):
         X["genredominance"] = X["totalearnings"] / X["game_count"]
         return X[["genredominance", "totalearnings", "totaltournaments"]]
 
-# DB connection
 conn = psycopg2.connect(
     host="localhost",
     port="5433",
@@ -26,8 +25,6 @@ conn = psycopg2.connect(
     user="postgres",
     password="2004"
 )
-
-# Load data
 query = "select * from gamesearning;"
 df = pd.read_sql(query, conn)
 conn.close()
@@ -53,7 +50,7 @@ pipeline = Pipeline([
 # Train model
 pipeline.fit(X_train, y_train)
 
-# ave model
+# save 
 with open("ml_models/gamesearning_datasets/genre saturation risk/genre_saturation.pkl", "wb") as f:
     pickle.dump(pipeline, f)
 
