@@ -1,67 +1,9 @@
-# Stratify #
+Stratify 🎮📊
 
-[Simulate. Predict. Monetize]
+Simulate • Predict • Monetize
+
+Stratify is a data-driven esports & creator economy analytics project.
+It collects, cleans, and analyzes data from tournaments, teams, games, and YouTube creators — then builds ML models to simulate outcomes, predict risks, and uncover monetization opportunities.
 
 
-├── .env
-├── Data-collection
-    ├── tournments data
-    │   ├── README.md
-    │   ├── cleaned_tournaments.csv
-    │   ├── cleaning.py
-    │   ├── remove_duplicates.py
-    │   ├── tournaments.csv.xlsx
-    │   ├── tournaments_grouped.csv
-    │   ├── tournments.py
-    │   └── tournments_final.csv
-    └── youtube data
-    │   ├── README.md
-    │   ├── TopYoutubers.csv
-    │   ├── channels.csv
-    │   └── creators.py
-├── Final-data
-    ├── CountryCodes.csv
-    ├── GamesEarning.csv
-    ├── README.md
-    ├── TeamEarnings.csv
-    ├── TopYoutubers.csv
-    └── Tournaments.csv
-├── LICENSE
-├── ML_models
-    ├── GamesEarning_datasets
-    │   ├── Genre Saturation Risk
-    │   │   ├── README.md
-    │   │   ├── genre_saturation.pkl
-    │   │   ├── predict.py
-    │   │   └── train.py
-    │   └── new
-    │   │   └── README.md
-    ├── TeamsEarnings_dataset
-    │   ├── Prize-to-Hype ratio
-    │   │   ├── README.md
-    │   │   ├── ph_ratio_data.pkl
-    │   │   ├── predict.py
-    │   │   └── train.py
-    │   └── Team dominance index
-    │   │   ├── README.md
-    │   │   ├── dominance_data.pkl
-    │   │   ├── predict.py
-    │   │   └── train.py
-    ├── TopYoutubers_dataset
-    │   ├── Engagement Clustering
-    │   │   ├── README.md
-    │   │   ├── predict.py
-    │   │   ├── train.py
-    │   │   └── yt_engagement.pkl
-    │   └── Growth_Efficiency_index
-    │   │   ├── README.md
-    │   │   ├── predict.py
-    │   │   ├── train.py
-    │   │   └── yt_classifier.pkl
-    └── Tournments_dataset
-    │   └── Tournment Stability Score
-    │       ├── README.MD
-    │       ├── predict.py
-    │       ├── stability_cluster.pkl
-    │       └── train.py
-└── README.md
+
