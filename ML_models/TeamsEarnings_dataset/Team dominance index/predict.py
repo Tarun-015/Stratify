@@ -1,28 +1,33 @@
+import streamlit as st
 import pickle
 
+# Load data
 with open("ML_models/TeamsEarnings_dataset/Team dominance index/dominance_data.pkl", "rb") as f:
     df_grouped = pickle.load(f)
 
-while True:
-    team_name = input("Enter a team name: ").strip()
+st.title("🏆 Team Dominance Index Analyzer")
 
-    # Check if team exists
-    team_data = df_grouped[df_grouped["winningteam"].str.lower() == team_name.lower()]
+# Dropdown for team selection
+teams = df_grouped["winningteam"].unique()
+selected_team = st.selectbox("Select a team:", ["-- Select a Team --"] + list(teams))
 
-    if team_data.empty:
-        print(f"Team '{team_name}' not found in database.")
-        print("Available teams:", ", ".join(df_grouped["winningteam"].unique()[:10]), "...")
-        print("Please try again.\n")
-    else:
+if selected_team != "-- Select a Team --":
+    team_data = df_grouped[df_grouped["winningteam"] == selected_team]
+
+    if not team_data.empty:
         dominance_value = team_data["dominance"].values[0]
-        print(f"\nTeam: {team_name}")
-        print(f"Dominance Index: {dominance_value:.3f}")
 
-        # categorization
-        if dominance_value > 0.6:
-            print("Category: High Dominance")
+        st.write(f"### Team: {selected_team}")
+        st.write(f"**Dominance Index:** `{dominance_value:.3f}`")
+
+        # Categorization
+        if dominance_value > 0.42:
+            st.success("🏅 Category: **High Dominance**")
         elif dominance_value > 0.3:
-            print("Category: Medium Dominance")
+            st.warning("⚖️ Category: **Medium Dominance**")
         else:
-            print("Category: Low Dominance")
-        break
+            st.error("🥉 Category: **Low Dominance**")
+
+# Option to re-enter (reset dropdown)
+if st.button("🔄 Re-enter / Choose Again"):
+    st.experimental_rerun()
