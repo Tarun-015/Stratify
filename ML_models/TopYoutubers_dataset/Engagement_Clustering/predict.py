@@ -1,18 +1,19 @@
-import psycopg2
+import streamlit as st
 import pandas as pd
 import pickle
 from googleapiclient.discovery import build
 
-with open("ML_models\TopYoutubers_dataset\Engagement Clustering\yt_engagement.pkl", "rb") as f:
+# Load Model
+with open("ML_models/TopYoutubers_dataset/Engagement Clustering/yt_engagement.pkl", "rb") as f:
     kmeans, scaler, mapping = pickle.load(f)
 
-
 # YouTube API Setup
-API_KEY = "AIzaSyCbzJxbnkP66k1-uYB2fd3Ly_mQOigH2m4"   # <-- replace with your real API key
+API_KEY = "AIzaSyCbzJxbnkP66k1-uYB2fd3Ly_mQOigH2m4"  # ⚠️ apna API key daalo
 youtube = build("youtube", "v3", developerKey=API_KEY)
 
+
+# ---------------- Helper Functions ----------------
 def get_channel_id(channel_name):
-    """Get channel ID from search query"""
     request = youtube.search().list(
         q=channel_name,
         part="snippet",
@@ -25,7 +26,6 @@ def get_channel_id(channel_name):
     return response["items"][0]["snippet"]["channelId"]
 
 def get_channel_stats(channel_id):
-    """Fetch subscribers, views, video count (basic stats)"""
     request = youtube.channels().list(
         part="snippet,statistics",
         id=channel_id
@@ -43,7 +43,6 @@ def get_channel_stats(channel_id):
     }
 
 def get_video_stats(channel_id, max_results=10):
-    """Fetch likes & comments for recent videos"""
     request = youtube.channels().list(
         part="contentDetails",
         id=channel_id
@@ -80,11 +79,11 @@ def get_video_stats(channel_id, max_results=10):
 def predict_engagement(youtuber_name):
     channel_id = get_channel_id(youtuber_name)
     if not channel_id:
-        return f"Channel not found: {youtuber_name}"
+        return None, f"❌ Channel not found: {youtuber_name}"
 
     data = get_channel_stats(channel_id)
     if not data:
-        return f"Could not fetch stats for: {youtuber_name}"
+        return None, f"❌ Could not fetch stats for: {youtuber_name}"
 
     # Fetch avg likes/comments from recent videos
     avg_likes, avg_comments = get_video_stats(channel_id, max_results=10)
@@ -106,21 +105,38 @@ def predict_engagement(youtuber_name):
     response = request.execute()
     start_year = response["items"][0]["snippet"]["publishedAt"].split("-")[0]
 
-    return {
-        "Channel\n": data["channel_title"],
-        "Subscribers\n": data["subscribers"],
-        "Total Views\n": data["total_views"],
-        "Videos\n": data["video_count"],
-        "Avg Views/Video\n": round(avg_views, 2),
-        "Avg Likes/Video\n": round(avg_likes, 2),
-        "Avg Comments/Video\n": round(avg_comments, 2),
+    result = {
+        "Channel": data["channel_title"],
+        "Subscribers": data["subscribers"],
+        "Total Views": data["total_views"],
+        "Videos": data["video_count"],
+        "Avg Views/Video": round(avg_views, 2),
+        "Avg Likes/Video": round(avg_likes, 2),
+        "Avg Comments/Video": round(avg_comments, 2),
         "Engagement": engagement_category,
-        "Channel Start Year\n": start_year
+        "Channel Start Year": start_year
     }
-    
-    
-# User Input
-if __name__ == "__main__":
-    name = input("Enter YouTuber name: ")
-    result = predict_engagement(name)
-    print(result)
+    return result, None
+
+
+# ---------------- Streamlit UI ----------------
+st.title("📊 YouTuber Engagement Prediction")
+st.write("Enter a YouTube channel name to analyze engagement using clustering model (KMeans).")
+
+youtuber_name = st.text_input("🔍 Enter YouTuber Name:")
+
+if st.button("Predict Engagement"):
+    if not youtuber_name.strip():
+        st.warning("Please enter a channel name.")
+    else:
+        with st.spinner("Fetching data... Please wait ⏳"):
+            result, error = predict_engagement(youtuber_name)
+
+        if error:
+            st.error(error)
+        else:
+            st.success(f"✅ Engagement Prediction for {result['Channel']}")
+            st.json(result)
+
+def app():
+    st.title("📊 Engagement Clustering")
