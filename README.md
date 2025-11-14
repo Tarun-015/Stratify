@@ -1,4 +1,4 @@
-Stratify 🎮
+Stratify 🎮  [new updates coming]
 
 Simulate • Predict • Monetize
 
