@@ -1,23 +1,59 @@
-﻿# Secrets
+# === SECRETS — never commit ===
 .env
+*.env
 .env.*
 !.env.example
 
-# Python
+# === Python ===
 __pycache__/
 *.py[cod]
-*.pkl
-*.joblib
-.ipynb_checkpoints/
+*.pyo
+*.pyd
+*.so
+*.egg
 *.egg-info/
 dist/
 build/
-.venv/
+.eggs/
+.Python
+pip-log.txt
+
+# === Virtual environments ===
 venv/
+env/
+.venv/
+ENV/
 
-# Data
-Final-data/*.csv
+# === Jupyter ===
+.ipynb_checkpoints/
+*.ipynb_checkpoints
 
-# OS
+# === ML artifacts ===
+saved_models/
+*.pkl
+*.joblib
+*.h5
+*.pt
+*.pth
+
+# === Data (raw data is large, keep processed small CSVs) ===
+data/raw/
+
+# === Testing & coverage ===
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+*.cover
+
+# === IDE ===
+.vscode/
+.idea/
+*.swp
+*.swo
 .DS_Store
 Thumbs.db
+
+# === Logs ===
+*.log
+logs/
