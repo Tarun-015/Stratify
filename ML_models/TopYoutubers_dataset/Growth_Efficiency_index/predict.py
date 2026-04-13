@@ -36,3 +36,10 @@ if st.button("Predict Investment Category"):
 
     st.subheader("📊 Features Used")
     st.write(user_data)
+<<<<<<< HEAD
+=======
+
+
+def app():
+    st.title("📊 YouTuber Growth Efficiency Index")
+>>>>>>> f985831

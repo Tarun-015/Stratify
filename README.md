@@ -1,64 +1,38 @@
-# Stratify #
+Stratify 🎮📊
 
-[Simulate. Predict. Monetize]
+Simulate • Predict • Monetize
 
+Stratify is a data-driven esports & creator economy analytics project.
+It collects, cleans, and analyzes data from tournaments, teams, games, and YouTube creators — then builds ML models to simulate outcomes, predict risks, and uncover monetization opportunities.
 
+    Features
 
-├── .env(environment)
+Data Collection & Cleaning
 
-├── Data-collection
+Tournament datasets (earnings, stability, participation).
 
-    ├── tournments data
-    |
-    │   ├── cleaned_tournaments.csv
-    |
-    │   ├── cleaning.py
-    |
-    │   ├── remove_duplicates.py
-    |
-    │   ├── tournaments.csv.xlsx
-    |
-    │   ├── tournaments_grouped.csv
-    
-    │   ├── tournments.py
-    
-    │   └── tournments_final.csv
-    
-    └── youtube data
-    
-    │   ├── TopYoutubers.csv
-    
-    │   ├── channels.csv
+YouTube datasets (top creators, engagement, growth).
 
-    │   └── creators.py
-    
-├── Final-data
+Games & teams datasets (earnings, dominance, hype).
 
-    ├── CountryCodes.csv
-    
-    ├── GamesEarning.csv
-    
-    ├── TeamEarnings.csv
-    
-    ├── TopYoutubers.csv
-    
-    └── Tournaments.csv
-    
-├── LICENSE
+    Custom ML Models
 
-├── ML_models
-    └── TopYoutubers_dataset
-    
-    │   ├── Engagement Clustering
-    
-    │       └── main.py
-    
-    │   └── Growth_Efficiency_index
+🎮 Genre Saturation Risk – detects oversaturated gaming genres.
 
-    │       ├── main.py
-    
-    │       ├── test.py
-    
-    │       └── yt_classifier.pkl
-    
-└── README.md
+🏆 Prize-to-Hype Ratio – benchmarks if hype matches actual earnings.
+
+👑 Team Dominance Index – measures competitive dominance across tournaments.
+
+📈 Growth Efficiency Index – evaluates how effectively creators convert reach into growth.
+
+🔥 Engagement Clustering – groups creators by audience engagement.
+
+📊 Tournament Stability Score – measures long-term reliability of esports tournaments.
+
+    Actionable Insights
+
+Helps investors avoid risky genres or unstable tournaments.
+
+Assists teams & creators in understanding dominance and growth efficiency.
+
+Provides monetization benchmarks for organizers, sponsors, and stakeholders.

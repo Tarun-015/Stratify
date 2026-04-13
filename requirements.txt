@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
 # Core
 pandas==2.2.2
 numpy==1.26.4
@@ -22,4 +25,34 @@ plotly==5.24.0
 
 
 # Installation
+=======
+>>>>>>> f985831
+# Core
+pandas==2.2.2
+numpy==1.26.4
+
+# Database
+psycopg2-binary==2.9.10
+
+# Machine Learning
+scikit-learn==1.5.1
+scipy==1.14.1
+
+# Visualization
+matplotlib==3.9.2
+seaborn==0.13.2
+
+# Environment Variables
+python-dotenv==1.0.1
+
+# Optional: Dashboards & Interactive Visualization
+streamlit==1.38.0
+plotly==5.24.0
+
+
+# Installation
+<<<<<<< HEAD
+=======
+>>>>>>> 13bd16b (WIP: before rebase)
+>>>>>>> f985831
 # pip install -r requirements.txt

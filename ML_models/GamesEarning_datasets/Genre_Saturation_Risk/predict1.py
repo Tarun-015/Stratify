@@ -100,3 +100,9 @@ if st.button("Predict"):
                     st.success(f"✅ Prediction for **{game_name}** (Genre: {selected_genre}): **{label}**")
                 else:
                     st.error(f"⚠️ Prediction for **{game_name}** (Genre: {selected_genre}): **{label}**")
+<<<<<<< HEAD:ML_models/GamesEarning_datasets/Genre Saturation Risk/predict1.py
+=======
+
+def app():
+    st.title("🎮 Genre Saturation Risk Predictor")
+>>>>>>> f985831:ML_models/GamesEarning_datasets/Genre_Saturation_Risk/predict1.py
