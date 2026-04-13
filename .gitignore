@@ -1,0 +1,23 @@
+﻿# Secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.pkl
+*.joblib
+.ipynb_checkpoints/
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Data
+Final-data/*.csv
+
+# OS
+.DS_Store
+Thumbs.db
