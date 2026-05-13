@@ -1,0 +1,130 @@
+
+<h2 class="sr-only">Stratify database ER diagram — 5 tables with relationships mapped to 6 ML models</h2>
+<style>
+#erd { width: 100%; }
+.legend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 12px; font-size: 12px; color: var(--color-text-secondary); }
+.leg-item { display: flex; align-items: center; gap: 6px; }
+.leg-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+</style>
+<div id="erd"></div>
+<div class="legend">
+  <div class="leg-item"><div class="leg-dot" style="background:#1D9E75"></div>You already have this</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#378ADD"></div>New table needed</div>
+</div>
+<script type="module">
+import mermaid from 'https://esm.sh/mermaid@11/dist/mermaid.esm.min.mjs';
+const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+await document.fonts.ready;
+mermaid.initialize({
+  startOnLoad: false,
+  theme: 'base',
+  fontFamily: '"Anthropic Sans", sans-serif',
+  themeVariables: {
+    darkMode: dark,
+    fontSize: '12px',
+    fontFamily: '"Anthropic Sans", sans-serif',
+    lineColor: dark ? '#9c9a92' : '#73726c',
+    textColor: dark ? '#c2c0b6' : '#3d3d3a',
+    primaryColor: dark ? '#1a2744' : '#E6F1FB',
+    primaryBorderColor: dark ? '#378ADD' : '#185FA5',
+    secondaryColor: dark ? '#0d2b1e' : '#E1F5EE',
+    secondaryBorderColor: dark ? '#1D9E75' : '#0F6E56',
+  },
+});
+const diagram = `erDiagram
+  GAMES {
+    serial game_id PK
+    varchar game
+    date release_date
+    varchar genre
+    numeric total_earnings
+    numeric percent_offline_earnings
+    int total_players
+    int total_tournaments
+  }
+
+  TOURNAMENTS {
+    serial tournament_id PK
+    varchar tournament_name
+    int year
+    int game_id FK
+    varchar organizer
+    varchar frequency
+    varchar host_country
+    numeric prize_pool_usd
+    int peak_viewers
+    int editions_count
+  }
+
+  TOP_YOUTUBERS {
+    serial youtuber_id PK
+    varchar channel_name
+    varchar country
+    bigint subscribers
+    bigint total_views
+    int video_count
+    numeric avg_views_per_video
+    numeric channel_age_years
+    numeric upload_freq_per_week
+    numeric avg_video_length_minutes
+    numeric likes_per_video_avg
+    numeric comments_per_video_avg
+    numeric engagement_rate_percent
+    varchar language
+    bigint top_video_views
+    date last_upload_date
+  }
+
+  TEAMS {
+    serial team_id PK
+    varchar team_name
+    varchar region
+    varchar primary_game
+    int founded_year
+    numeric total_earnings_usd
+    int tournaments_played
+    int tournaments_won
+    int top3_finishes
+    numeric avg_placement
+  }
+
+  TEAM_TOURNAMENT_RESULTS {
+    serial result_id PK
+    int team_id FK
+    int tournament_id FK
+    int placement
+    numeric prize_won_usd
+    int year
+  }
+
+  GAMES ||--o{ TOURNAMENTS : "hosted in"
+  TOURNAMENTS ||--o{ TEAM_TOURNAMENT_RESULTS : "has results"
+  TEAMS ||--o{ TEAM_TOURNAMENT_RESULTS : "participates in"
+`;
+
+const { svg } = await mermaid.render('erd-svg', diagram);
+document.getElementById('erd').innerHTML = svg;
+
+document.querySelectorAll('#erd svg .node').forEach(node => {
+  const firstPath = node.querySelector('path[d]');
+  if (!firstPath) return;
+  const d = firstPath.getAttribute('d');
+  const nums = d.match(/-?[\d.]+/g)?.map(Number);
+  if (!nums || nums.length < 8) return;
+  const xs = [nums[0], nums[2], nums[4], nums[6]];
+  const ys = [nums[1], nums[3], nums[5], nums[7]];
+  const x = Math.min(...xs), y = Math.min(...ys);
+  const w = Math.max(...xs) - x, h = Math.max(...ys) - y;
+  const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+  rect.setAttribute('x', x); rect.setAttribute('y', y);
+  rect.setAttribute('width', w); rect.setAttribute('height', h);
+  rect.setAttribute('rx', '8');
+  for (const a of ['fill', 'stroke', 'stroke-width', 'class', 'style']) {
+    if (firstPath.hasAttribute(a)) rect.setAttribute(a, firstPath.getAttribute(a));
+  }
+  firstPath.replaceWith(rect);
+});
+document.querySelectorAll('#erd svg .row-rect-odd path, #erd svg .row-rect-even path').forEach(p => {
+  p.setAttribute('stroke', 'none');
+});
+</script>
