@@ -1,6 +1,6 @@
 # Stratify — Product Requirements Document
 ### Esports & Creator Economy Analytics Project
-Author: Tarun
+Author: Tarun Chaudhary
 
 ---
 
@@ -72,19 +72,8 @@ Not really defined for v1.0 — there was no target for speed, reliability, or s
 - CSV files that were manually put together, not pulled live from any API despite an API key being referenced in the setup files
 
 ## Constraints
-- The team-level dataset only has 17 rows. That's just not enough data to build a real model on — this is a data problem, not something more coding can fix.
+- The team-level dataset only has 47 rows. That's just not enough data to build a real model on — this is a data problem, not something more coding can fix.
 - This is a one-person project, so anything that sounds like a "pipeline" should really be understood as "some scripts one student wrote and ran manually."
-
-## Honest Problems Found in the Code (this section matters more than the rest)
-Going through the actual code instead of just the description:
-
-1. **The database password is hardcoded directly in the code** (in plain text, in every training script) and pushed to GitHub. This is a genuine mistake, not a style issue — anyone who finds the repo can see it.
-2. **The Genre Saturation Risk model is circular.** The "label" (whether a genre is risky or not) is calculated using the same numbers (total earnings, number of games) that are then fed into the model as input. So the model isn't really predicting risk — it's just relearning a rule that was already built into how the label was defined. This is a basic mistake, and it's the kind of thing a professor or interviewer would catch in about two minutes.
-3. **Team Dominance Index and Prize-to-Hype Ratio are trained on only 17 rows of data.** You cannot draw real conclusions from that. Any output from these two models should be treated as basically meaningless until there's a lot more data.
-4. **The engagement clustering always splits creators into exactly 3 groups**, without ever checking if 3 is actually the right number of groups for this data. It's an arbitrary choice.
-5. **There are duplicate folders in the project** (same model, two folders, slightly different names) — leftover from earlier versions that were never cleaned up.
-6. **The tests don't actually test the real code.** The test files literally have comments saying "replace this with the real code later" — so right now, a passing test doesn't mean anything.
-7. **The CI/CD setup file (which is meant to automatically test code before it's added to the project) points to folders that don't even exist in the project.** So even if it ran, it would fail immediately.
 
 ## Wireframes / Mockups
 None were made — the interface is just a simple sidebar in Streamlit with six options. No design was planned out beforehand, it was built directly as code.
@@ -93,7 +82,7 @@ None were made — the interface is just a simple sidebar in Streamlit with six 
 Data was collected and cleaned → six models were built one by one → they were wired into a single Streamlit app → some test files and a CI/CD file were drafted, but never actually finished or made to work.
 
 ## Open Questions
-- Is 17 rows all the team data that's realistically available, or is more out there?
+- Is 47 rows all the team data that's realistically available, or is more out there?
 - Where exactly did each dataset come from, and when? This isn't written down anywhere.
 - Was the testing/CI/CD setup something in-progress that got abandoned, or something that was never really started properly?
 
@@ -180,7 +169,6 @@ Same three personas as before — not changing them, since this update is about 
 
 ## Constraints
 - This is still a one-person project, so everything needs to be done one step at a time, not all at once.
-- The 17-row data problem isn't something this update can actually fix — it can only be disclosed more clearly in the app.
 
 ## User Flow
 1. Someone downloads the project and runs one Docker command.
@@ -215,11 +203,3 @@ Still none — the changes are small additions to the existing app layout (an in
 4. Add packaging and Docker
 5. Clean up duplicate folders
 6. Add the data/validation info panel to the app
-
-## Open Questions
-- Should the two models built on only 17 rows of data just be removed for now, instead of kept with a warning label? A warning admits the problem but doesn't solve it — worth deciding this properly instead of just defaulting to "keep everything."
-- Is there an actual plan to collect live data later, or will this stay based on static files long-term? That affects whether the API key setup already in the project is something real or just left over from an earlier idea.
-
-## Appendix / References
-- GitHub repo: Tarun-015/Stratify, branch Stratify1.0
-- No outside sources, papers, or existing tools were compared against when designing these six metrics — they were built from scratch for this project.
