@@ -337,5 +337,3 @@ The project will be considered complete when:
 * Automated testing
 * Secure configuration management
 * Advanced analytics dashboard
-
----
